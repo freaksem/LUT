@@ -1,8 +1,10 @@
 package com.luxoft.sm.controller;
 
+import com.luxoft.sm.bootstrap.UserLoader;
 import com.luxoft.sm.domain.User;
 import com.luxoft.sm.services.CurrentUser;
 import com.luxoft.sm.services.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -15,28 +17,18 @@ import java.util.Map;
  * Created by smukhlaev on 22.12.2016.
  */
 @Controller
-public class WelcomeController {
-
-    @Value("${amount.ruble}")
-    private String userRubles;
-
-    private UserService userService;
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
+public class HomeController {
     @RequestMapping("/")
     public String welcome(Map<String, Object> model, Authentication authentication) {
-        CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
-        Iterable<User> users = userService.getAllUsers();
-        model.put("users", users);
+        if(authentication != null) {
+            CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
 
-        String loggedUser = currentUser.getUsername();
-        model.put("loggedUserName", loggedUser);
+            String loggedUser = currentUser.getUsername();
+            model.put("loggedUserName", loggedUser);
+        }
+        else model.put("loggedUserName", null);
 
-        model.put("message2", userRubles);
-        return "welcome";
+        return "home";
     }
 
 }

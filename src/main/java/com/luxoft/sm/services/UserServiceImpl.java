@@ -38,36 +38,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(new Sort("userName"));
     }
 
-    @Override
-    public User create(UserCreateForm form) {
-        User user = new User();
-        user.setUserName(form.getUserName());
-        user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-        user.setRole(form.getRole());
-        return userRepository.save(user);
-    }
-
-//    @Override
-//    public Iterable<User> listAllUsers() {
-//        return userRepository.findAll();
-//    }
-//
-//    @Override
-//    public User getUserById(Integer id) {
-//        return userRepository.findOne(Long.valueOf(id));
-//    }
-//
-//
-//    @Override
-//    public User saveUser(User user) {
-//        return userRepository.save(user);
-//    }
-//
-//    @Override
-//    public User create(UserCreateForm form) {
-//        User user = new User();
-//        user.setUserName(form.getUserName());
-//        user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-//        return userRepository.save(user);
-//    }
 }

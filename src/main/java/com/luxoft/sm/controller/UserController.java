@@ -1,66 +1,48 @@
 package com.luxoft.sm.controller;
 
-import com.luxoft.sm.component.UserCreateFormValidator;
-import com.luxoft.sm.services.UserCreateForm;
+import com.luxoft.sm.domain.User;
+import com.luxoft.sm.services.CurrentUser;
 import com.luxoft.sm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-import java.util.NoSuchElementException;
+import java.util.Map;
 
 /**
- * Created by sm on 08.01.2017.
+ * Created by sm on 10.01.2017.
  */
 @Controller
 public class UserController {
 
-    private final UserService userService;
-    private final UserCreateFormValidator userCreateFormValidator;
+    @Value("${amount.ruble}")
+    private String userRubles;
 
+    private UserService userService;
     @Autowired
-    public UserController(UserService userService, UserCreateFormValidator userCreateFormValidator) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
-        this.userCreateFormValidator = userCreateFormValidator;
     }
 
-    @InitBinder("form")
-    public void initBinder(WebDataBinder binder) {
-        binder.addValidators(userCreateFormValidator);
-    }
+    @RequestMapping("/user")
+    public String welcome(Map<String, Object> model, Authentication authentication) {
 
-    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
-    @RequestMapping("/user/{id}")
-    public ModelAndView getUserPage(@PathVariable Long id) {
-        return new ModelAndView("user", "user", userService.getUserById(id)
-                .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
-    }
+        CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
 
-    @PreAuthorize("hasAuthority('USER')")
-    @RequestMapping(value = "/user/create", method = RequestMethod.GET)
-    public ModelAndView getUserCreatePage() {
-        return new ModelAndView("user_create", "form", new UserCreateForm());
-    }
-
-    @PreAuthorize("hasAuthority('USER')")
-    @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    public String handleUserCreateForm(@Valid @ModelAttribute("form") UserCreateForm form, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "user_create";
+        if(currentUser != null) {
+            String loggedUser = currentUser.getUsername();
+            model.put("loggedUserName", loggedUser);
         }
-        try {
-            userService.create(form);
-        } catch (DataIntegrityViolationException e) {
-            bindingResult.reject("userName.exists", "User name already exists");
-            return "user_create";
-        }
-        return "redirect:/users";
+
+
+        Iterable<User> users = userService.getAllUsers();
+        model.put("users", users);
+
+        model.put("message2", userRubles);
+
+        return "user";
     }
 
 }

@@ -4,8 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-    <!-- Access the bootstrap Css like this,
-        Spring boot will handle the resource mapping automcatically -->
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
 
     <spring:url value="/css/main.css" var="springCss" />
@@ -22,33 +20,25 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
-                <li class="active"><a href="/login">Login</a></li>
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/login">Login</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container">
-    
-        <form role="form" action="/login" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <div>
-                <label for="userName">User name</label>
-                <input type="text" name="userName" id="userName" required autofocus>
-            </div>
-            <div>
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <button type="submit">Sign in</button>
-        </form>
-
     <c:choose>
-        <c:when test="${error.isPresent()}">
-            <p>The userName or password you have entered is invalid, try again.</p>
-            <br />
+        <c:when test="${loggedUserName == null}">
+            <p>Hello anonymous. Go to login page --> <a href="/login">here</a></p>
         </c:when>
+        <c:otherwise>
+            <span>Hello, <a href="/user">${loggedUserName}</a>!</span>
+            <form action="/logout" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </c:otherwise>
     </c:choose>
 
 

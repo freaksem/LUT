@@ -18,11 +18,11 @@
     <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Spring Boot</a>
+                <a class="navbar-brand" href="/">Spring Boot</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li><a href="/login">Login</a></li>
                 </ul>
             </div>
@@ -33,10 +33,14 @@
 
         <div class="starter-template">
             <h1>Exchange application</h1>
-            <h2>Message from properties: ${message}</h2>
-            <p>Message2: ${message2}</p>
+            <p>Message from custom properties: ${message2}</p>
 
             <p>Hello, ${loggedUserName}!</p>
+            <form action="/logout" method="post">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <input type="submit" value="Sign Out"/>
+            </form>
+
         </div>
 
         <h2>Users list:</h2>
