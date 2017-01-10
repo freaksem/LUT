@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -32,22 +33,31 @@
     <div class="container">
 
         <div class="starter-template">
-            <h1>Exchange application</h1>
-            <p>Message from custom properties: ${message2}</p>
 
-            <p>Hello, ${loggedUserName}!</p>
+            <p>Привет, ${loggedUserName}!</p>
             <form action="/logout" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input type="submit" value="Sign Out"/>
+                <input type="submit" value="Выход"/>
             </form>
 
         </div>
 
-        <h2>Users list:</h2>
-        <c:forEach items="${users}" var="user">
-            <p><c:out escapeXml="false" value="${user.userName}"/></p>
-        </c:forEach>
+        <h3>Баланс:</h3>
+        <p>Рубль: ${rublesCount}</p>
+        <p>Доллар: ${dollarsCount}</p>
+        <p>Евро: ${eurosCount}</p>
 
+        <h3>История операций</h3>
+        <table>
+            <tr>
+                <th>Покупка</th>
+                <th>Сумма</th>
+                <th>Оплата</th>
+                <th>Сумма</th>
+                <th>Баланс</th>
+            </tr>
+            <!-- todo: iterate operations -->
+        </table>
     </div>
 
     <script type="text/javascript" src="${jQuery}"></script>

@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -34,14 +35,14 @@
         <form role="form" action="/login" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div>
-                <label for="userName">User name</label>
+                <label for="userName">Логин</label>
                 <input type="text" name="userName" id="userName" required autofocus>
             </div>
             <div>
-                <label for="password">Password</label>
+                <label for="password">Пароль</label>
                 <input type="password" name="password" id="password" required>
             </div>
-            <button type="submit">Sign in</button>
+            <button type="submit">Вход</button>
         </form>
 
     <c:choose>

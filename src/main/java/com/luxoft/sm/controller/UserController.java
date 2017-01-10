@@ -20,6 +20,12 @@ public class UserController {
     @Value("${amount.ruble}")
     private String userRubles;
 
+    @Value("${amount.dollar}")
+    private String userDollars;
+
+    @Value("${amount.euro}")
+    private String userEuros;
+
     private UserService userService;
     @Autowired
     public void setUserService(UserService userService) {
@@ -36,11 +42,9 @@ public class UserController {
             model.put("loggedUserName", loggedUser);
         }
 
-
-        Iterable<User> users = userService.getAllUsers();
-        model.put("users", users);
-
-        model.put("message2", userRubles);
+        model.put("rublesCount", userRubles);
+        model.put("dollarsCount", userDollars);
+        model.put("eurosCount", userEuros);
 
         return "user";
     }
