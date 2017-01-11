@@ -17,14 +17,7 @@ import java.util.Map;
 @Controller
 public class UserController {
 
-    @Value("${amount.ruble}")
-    private String userRubles;
 
-    @Value("${amount.dollar}")
-    private String userDollars;
-
-    @Value("${amount.euro}")
-    private String userEuros;
 
     private UserService userService;
     @Autowired
@@ -40,11 +33,12 @@ public class UserController {
         if(currentUser != null) {
             String loggedUser = currentUser.getUsername();
             model.put("loggedUserName", loggedUser);
+            model.put("rublesCount", currentUser.getRuBalance());
+            model.put("dollarsCount", currentUser.getUsBalance());
+            model.put("eurosCount", currentUser.getEuBalance());
         }
 
-        model.put("rublesCount", userRubles);
-        model.put("dollarsCount", userDollars);
-        model.put("eurosCount", userEuros);
+
 
         return "user";
     }

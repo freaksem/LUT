@@ -19,16 +19,25 @@ public class User {
     private String userName;
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
+    @Column(name = "ruBalance", nullable = false)
+    private Long ruBalance;
+    @Column(name = "usBalance", nullable = false)
+    private Long usBalance;
+    @Column(name = "euBalance", nullable = false)
+    private Long euBalance;
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     public User() {}
 
-    public User(String userName, String password, Role role) {
+    public User(String userName, String password, Role role, Long ruBalance, Long usBalance, Long euBalance) {
         this.userName = userName;
         this.passwordHash = new BCryptPasswordEncoder().encode(password);
         this.role = role;
+        this.ruBalance = ruBalance;
+        this.usBalance = usBalance;
+        this.euBalance = euBalance;
     }
 
     public Long getUserId() {
@@ -59,6 +68,26 @@ public class User {
         this.role = role;
     }
 
+    public Long getRuBalance() {
+        return ruBalance;
+    }
+    public void setRuBalance(Long ruBalance) {
+        this.ruBalance = ruBalance;
+    }
+
+    public Long getUsBalance() {
+        return usBalance;
+    }
+    public void setUsBalance(Long usBalance) {
+        this.usBalance = usBalance;
+    }
+
+    public Long getEuBalance() {
+        return euBalance;
+    }
+    public void setEuBalance(Long euBalance) {
+        this.euBalance = euBalance;
+    }
     @Override
     public String toString() {
         return String.format(

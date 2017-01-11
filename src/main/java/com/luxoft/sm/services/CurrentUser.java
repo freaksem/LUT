@@ -28,4 +28,8 @@ public class CurrentUser extends org.springframework.security.core.userdetails.U
         return user.getRole();
     }
 
+    public Long getRuBalance() { return user.getRuBalance();}
+    public Long getUsBalance() { return user.getUsBalance();}
+    public Long getEuBalance() { return user.getEuBalance();}
+
 }
