@@ -81,6 +81,11 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <!--end mysql dependencies -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
