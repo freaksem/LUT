@@ -47,6 +47,30 @@
         <p>Доллар: ${dollarsCount}</p>
         <p>Евро: ${eurosCount}</p>
 
+        <h3>Покупка валюты</h3>
+        <form action="/exchange" method="post">
+            <label for="buy-select">Валюта к покупке</label>
+            <select class="exchange-select" id="buy-select" name="buy-select">
+                <option value="0">Выбрать</option>
+                <option value="rub">RUB</option>
+                <option value="us">US</option>
+                <option value="eu">EU</option>
+            </select>
+
+            <label>Сколько:
+                <input type="text"/>
+            </label>
+            <label for="sell-select">Покупаем за</label>
+            <select class="exchange-select" id="sell-select" name="sell-select">
+                <option value="0">Выбрать</option>
+                <option value="rub">RUB</option>
+                <option value="us">US</option>
+                <option value="eu">EU</option>
+            </select>
+            <p>Стоимость: </p>
+            <input type="submit" value="Купить" />
+        </form>
+
         <h3>История операций</h3>
         <table>
             <tr>
@@ -62,7 +86,21 @@
 
     <script type="text/javascript" src="${jQuery}"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){
+            $('select').change(function() {
 
+                var value = $(this).val();
+                $(this).siblings('select.exchange-select').children('option').each(function() {
+                    if ( $(this).val() === value ) {
+                        $(this).attr('disabled', true).siblings().removeAttr('disabled');
+                    }
+                });
+
+            });
+        })
+
+    </script>
 </body>
 
 </html>
