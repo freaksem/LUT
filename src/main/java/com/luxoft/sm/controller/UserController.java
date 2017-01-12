@@ -1,14 +1,15 @@
 package com.luxoft.sm.controller;
 
-import com.luxoft.sm.domain.User;
+import com.luxoft.sm.domain.Operation;
 import com.luxoft.sm.services.CurrentUser;
+import com.luxoft.sm.services.OperationService;
 import com.luxoft.sm.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,12 +18,16 @@ import java.util.Map;
 @Controller
 public class UserController {
 
-
-
     private UserService userService;
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    private OperationService operationService;
+    @Autowired
+    public void setOperationService(OperationService operationService) {
+        this.operationService = operationService;
     }
 
     @RequestMapping("/user")
@@ -32,14 +37,19 @@ public class UserController {
 
         if(currentUser != null) {
             String loggedUser = currentUser.getUsername();
+
+            if(operationService.findFirst20OperationsByUserId(currentUser.getId()).isPresent()) {
+                List<Operation> userOperations = operationService.findFirst20OperationsByUserId(currentUser.getId()).get();
+                model.put("userOperations", userOperations);
+            }
+
+            Long totalBalanceOne = operationService.getBalance(currentUser.getId(), 1L);
+            Long totalBalanceSecond = operationService.getBalance(currentUser.getId(), 2L);
+
             model.put("loggedUserName", loggedUser);
-            model.put("rublesCount", currentUser.getRuBalance());
-            model.put("dollarsCount", currentUser.getUsBalance());
-            model.put("eurosCount", currentUser.getEuBalance());
+            model.put("balanceOne", totalBalanceOne);
+            model.put("balanceTwo", totalBalanceSecond);
         }
-
-
-
         return "user";
     }
 

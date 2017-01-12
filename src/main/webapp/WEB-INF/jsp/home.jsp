@@ -31,13 +31,13 @@
 <div class="container">
     <c:choose>
         <c:when test="${loggedUserName == null}">
-            <p>Hello anonymous. Go to login page --> <a href="/login">here</a></p>
+            <p>Привет, пользователь. Авторизйся --> <a href="/login">тут</a></p>
         </c:when>
         <c:otherwise>
-            <span>Hello, <a href="/user">${loggedUserName}</a>!</span>
+            <span>Привет, <a href="/user">${loggedUserName}</a>!</span>
             <form action="/logout" method="post">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input type="submit" value="Sign Out"/>
+                <input type="submit" value="Выйти"/>
             </form>
         </c:otherwise>
     </c:choose>
