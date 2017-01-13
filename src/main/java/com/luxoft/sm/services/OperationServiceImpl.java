@@ -1,14 +1,14 @@
 package com.luxoft.sm.services;
 
+import com.luxoft.sm.domain.Currency;
 import com.luxoft.sm.domain.Operation;
+import com.luxoft.sm.repository.CurrencyRepository;
 import com.luxoft.sm.repository.OperationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by Luxoft on 12.01.2017.
@@ -17,10 +17,16 @@ import java.util.Optional;
 public class OperationServiceImpl implements OperationService {
 
     private OperationRepository operationRepository;
+    private CurrencyRepository currencyRepository;
 
     @Autowired
     public void setOperationRepository(OperationRepository operationRepository) {
         this.operationRepository = operationRepository;
+    }
+
+    @Autowired
+    public void setCurrencyRepository(CurrencyRepository currencyRepository) {
+        this.currencyRepository = currencyRepository;
     }
 
     @Override
@@ -34,8 +40,9 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Long getBalance(Long userId, Long currencyId) {
+    public Map<String, Long> getBalance(Long userId, Long currencyId) {
         Long totalBalance = 0L;
+        HashMap<String, Long> currencyBalance = new HashMap<>();
         if(operationRepository.findAllOperationsByUserId(userId).isPresent()) {
             List<Operation> operations = operationRepository.findAllOperationsByUserId(userId).get();
             for(Operation operation: operations) {
@@ -45,9 +52,11 @@ public class OperationServiceImpl implements OperationService {
                 if(Objects.equals(operation.getCurrencySellId(), currencyId)) {
                     totalBalance = totalBalance - operation.getCurrencySellSumm();
                 }
+                Currency currency = currencyRepository.findOne(currencyId);
+                currencyBalance.put(currency.getCurrencyFullName(), totalBalance);
             }
         }
-        return totalBalance;
+        return currencyBalance;
     }
 
 

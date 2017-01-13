@@ -25,7 +25,7 @@ public class OperationController {
     }
 
     @RequestMapping(value = "/operation", method = RequestMethod.POST)
-    public String welcome(Authentication authentication) {
+    public String operation(Authentication authentication) {
         CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
         Operation fakeOperation = new Operation(currentUser.getId(), new Date(), 1L, 200L, 2L, 400L, 2L);
         operationRepository.save(fakeOperation);

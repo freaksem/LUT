@@ -3,6 +3,7 @@ package com.luxoft.sm.services;
 import com.luxoft.sm.domain.Operation;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -11,5 +12,5 @@ import java.util.Optional;
 public interface OperationService {
     Optional<List<Operation>> findAllOperationsByUserId(Long userId);
     Optional<List<Operation>> findFirst20OperationsByUserId(Long userId);
-    Long getBalance(Long userId, Long currencyId);
+    Map<String, Long> getBalance(Long userId, Long currencyId);
 }

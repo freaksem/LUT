@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by Luxoft on 12.01.2017.
  */
 @Entity
+@Table(name = "currency")
 public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,11 +19,15 @@ public class Currency {
     @Column(name = "currencyFullName", nullable = false, unique = true)
     private String currencyFullName;
 
+    @Column(name = "rate")
+    private Float rate;
+
     public Currency() {}
 
-    public Currency(String currencyShortName, String currencyFullName) {
+    public Currency(String currencyShortName, String currencyFullName, Float rate) {
         this.currencyShortName = currencyShortName;
         this.currencyFullName = currencyFullName;
+        this.rate = rate;
     }
 
     public Long getCurrencyId() {
@@ -44,5 +49,12 @@ public class Currency {
     }
     public void setCurrencyFullName(String currencyFullName) {
         this.currencyFullName = currencyFullName;
+    }
+
+    public Float getRate() {
+        return rate;
+    }
+    public void setRate(Float rate) {
+        this.rate = rate;
     }
 }

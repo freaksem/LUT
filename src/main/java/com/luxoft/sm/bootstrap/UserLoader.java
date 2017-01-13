@@ -41,9 +41,12 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent>{
         User userOne = new User("Simon", "1", Role.USER);
         User userTwo = new User("Elena", "2", Role.USER);
 
-        Operation fakeOperation = new Operation(1L, new Date(), 1L, 200L, 2L, 200L, 1L);
-        Operation fakeOperation2 = new Operation(1L, new Date(), 2L, 100L, 1L, 100L, 1L);
-        Operation fakeOperation3 = new Operation(2L, new Date(), 1L, 200L, 2L, 400L, 2L);
+        Operation fakeOperation = new Operation(1L, new Date(), 1L,
+                200L, 2L, 200L, 1L);
+        Operation fakeOperation2 = new Operation(1L, new Date(), 2L,
+                100L, 1L, 100L, 1L);
+        Operation fakeOperation3 = new Operation(2L, new Date(), 1L,
+                200L, 2L, 400L, 2L);
         operationRepository.save(fakeOperation);
         operationRepository.save(fakeOperation2);
         operationRepository.save(fakeOperation3);
