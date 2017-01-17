@@ -22,15 +22,15 @@ public class Operation {
     @Column(name = "currency_buy_id", nullable = false)
     private Long currencyBuyId;
     @Column(name = "currency_buy_summ", nullable = false)
-    private Long currencyBuySumm;
+    private Float currencyBuySumm;
 
     @Column(name = "currency_sell_id", nullable = false)
     private Long currencySellId;
     @Column(name = "currency_sell_summ", nullable = false)
-    private Long currencySellSumm;
+    private Float currencySellSumm;
 
     @Column(name = "exchange_rate", nullable = false)
-    private Long exchangeRate;
+    private Float exchangeRate;
 
     public Long getOperationId() {
         return operationId;
@@ -60,10 +60,10 @@ public class Operation {
         this.currencyBuyId = currencyBuyId;
     }
 
-    public Long getCurrencyBuySumm() {
+    public Float getCurrencyBuySumm() {
         return currencyBuySumm;
     }
-    public void setCurrencyBuySumm(Long currencyBuySumm) {
+    public void setCurrencyBuySumm(Float currencyBuySumm) {
         this.currencyBuySumm = currencyBuySumm;
     }
 
@@ -74,17 +74,17 @@ public class Operation {
         this.currencySellId = currencySellId;
     }
 
-    public Long getCurrencySellSumm() {
+    public Float getCurrencySellSumm() {
         return currencySellSumm;
     }
-    public void setCurrencySellSumm(Long currencySellSumm) {
+    public void setCurrencySellSumm(Float currencySellSumm) {
         this.currencySellSumm = currencySellSumm;
     }
 
-    public Long getExchangeRate() {
+    public Float getExchangeRate() {
         return exchangeRate;
     }
-    public void setExchangeRate(Long exchangeRate) {
+    public void setExchangeRate(Float exchangeRate) {
         this.exchangeRate = exchangeRate;
     }
 
@@ -95,8 +95,8 @@ public class Operation {
 
     public Operation(){}
 
-    public Operation(Long userId, Date operationDate, Long currencyBuyId, Long currencyBuySumm,
-                                  Long currencySellId, Long currencySellSumm, Long exchangeRate) {
+    public Operation(Long userId, Date operationDate, Long currencyBuyId, Float currencyBuySumm,
+                                  Long currencySellId, Float currencySellSumm, Float exchangeRate) {
         this.userId = userId;
         this.operationDate = operationDate;
         this.currencyBuyId = currencyBuyId;

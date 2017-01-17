@@ -58,31 +58,12 @@
 
             <div class="rate-wrapper col-md-3">
                 <h3>Курс валют</h3>
-                <c:choose>
-                    <c:when test="${not empty ruUsRate}">
-                        <c:forEach items="${ruUsRate}" var="entry">
-                            <p>${entry.key}: <span>${entry.value}</span></p>
-                        </c:forEach>
-                    </c:when>
-                </c:choose>
-                <c:choose>
-                    <c:when test="${not empty ruEuRate}">
-                        <c:forEach items="${ruEuRate}" var="entry">
-                            <p>${entry.key}: <span>${entry.value}</span></p>
-                        </c:forEach>
-                    </c:when>
-                </c:choose>
-                <c:choose>
-                    <c:when test="${not empty usEuRate}">
-                        <c:forEach items="${usEuRate}" var="entry">
-                            <p>${entry.key}: <span>${entry.value}</span></p>
-                        </c:forEach>
-                    </c:when>
-                </c:choose>
+                <div id="currRates"></div>
             </div>
+
             <div class="exchange-wrapper col-md-6">
                 <h3>Покупка валюты</h3>
-                <form action="/operation" method="post">
+                <form name="operationForm" action="/operation" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <label for="buy-select">Валюта к покупке</label>
                     <select class="exchange-select" id="buy-select" name="buy-select">
@@ -90,26 +71,27 @@
                         <c:choose>
                             <c:when test="${not empty currencyList}">
                                 <c:forEach items="${currencyList}" var="item">
-                                    <option value="${item.currencyId}">${item.currencyShortName}</option>
+                                    <option value="${item.currencyShortName}">${item.currencyShortName}</option>
                                 </c:forEach>
                             </c:when>
                         </c:choose>
                     </select>
-                    <label for="amount">Сколько:</label>
-                    <input id="amount" type="text" size="15"/>
+                    <label for="amount-to-buy">Сколько:</label>
+                    <input id="amount-to-buy" type="number" size="15"/>
                     <label for="sell-select">Покупаем за</label>
                     <select class="exchange-select" id="sell-select" name="sell-select">
                         <option value="0">Выбрать</option>
                         <c:choose>
                             <c:when test="${not empty currencyList}">
                                 <c:forEach items="${currencyList}" var="item">
-                                    <option value="${item.currencyId}">${item.currencyShortName}</option>
+                                    <option value="${item.currencyShortName}">${item.currencyShortName}</option>
                                 </c:forEach>
                             </c:when>
                         </c:choose>
                     </select>
-                    <p>Стоимость: </p>
-                    <input type="submit" value="Купить" />
+                    <p>Стоимость: <span id="exchangeCost">0</span></p>
+                    <input type="hidden" value="" id="exchangeCurrencies" />
+                    <button id="submit-operation">Купить</button>
                 </form>
             </div>
         </div>
@@ -147,6 +129,7 @@
                     </c:otherwise>
                 </c:choose>
             </div>
+
         </div>
     </div>
 
@@ -154,6 +137,25 @@
     <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         $(function(){
+            currencyRefresh();
+            setInterval(currencyRefresh, 5000);
+
+            $("#amount-to-buy").bind('keyup mouseup', function () {
+                var currencyToBuy = $("#buy-select").val();
+                var currencyToSell = $("#sell-select").val();
+                var exchangeSumm = $("#exchangeCost");
+                if(currencyToBuy == 0) {
+                    exchangeSumm.html("").append("Валюта покупки не выбрана");
+                }
+                if(currencyToSell == 0) {
+                    exchangeSumm.html("").append("Валюта продажи не выбрана");
+                }
+                if(currencyToBuy != 0 && currencyToSell !=0) {
+                    var exchangeRate = $("input[name='"+currencyToSell+"/"+currencyToBuy+"']").val();
+                    exchangeSumm.html(exchangeRate * $(this).val());
+                }
+            });
+
             $('select').change(function() {
                 var value = $(this).val();
                 $(this).siblings('select.exchange-select').children('option').each(function() {
@@ -162,7 +164,52 @@
                     }
                 });
             });
-        })
+        });
+        function currencyRefresh() {
+            $.ajax({
+                url : 'rateRefresh',
+                success : function(data) {
+                    var ratesContent="";
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var currencyCost = data[key];
+                            var currencyId = key.replace("/", "");
+                            var previousCost = $("input[name='"+key+"']").val();
+                            var change = "";
+                            if(previousCost != undefined) {
+                                if(currencyCost == previousCost) {
+                                    change = $("#"+currencyId).attr("class");
+                                }
+                                else if(currencyCost > previousCost) change = "up";
+                                else change = "down";
+                            }
+
+
+                            ratesContent += "<p id='" + currencyId + "' class='"+change+"'>" + key + ": " + currencyCost + "</p>";
+                            ratesContent += "<input type='hidden' name='"+key+"' value='" + currencyCost + "' />";
+                        }
+                    }
+                    $('#currRates').html(ratesContent);
+                }
+            });
+        }
+
+        $("#submit-operation").click(function(event) {
+            event.preventDefault();
+            $.post("operation", {
+                currencyToBuyParam : $("#buy-select").val(),
+                currencyToSellParam : $("#sell-select").val(),
+                summToBuyParam : $("#amount-to-buy").val(),
+                _csrf : $("input[name=_csrf]").val()
+            }, function(data) {
+                console.log(data);
+                location.reload();
+            }).done(function() {
+            }).fail(function(xhr, textStatus, errorThrown) {
+                $("#submit-operation").after("Недостаточно средств!");
+            }).complete(function() {
+            });
+        });
 
     </script>
 </body>

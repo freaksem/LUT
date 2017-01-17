@@ -15,4 +15,6 @@ public interface CurrencyRepository extends JpaRepository<Currency, Long> {
     @Transactional
     @Query(value = "update Currency c set c.rate=:rate where c.id=:currencyId")
     void updateCurrencyRate(@Param("currencyId") Long currencyId, @Param("rate") Float rate);
+
+    Currency findOneByCurrencyShortName(String currencyShortName);
 }

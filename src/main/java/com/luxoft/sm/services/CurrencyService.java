@@ -10,5 +10,7 @@ import java.util.List;
 public interface CurrencyService {
     List<Currency> getCurrencyList();
 
+    Currency getCurrencyIdByCurrencyShortName(String currencyShortName);
+    Currency getCurrencyById(Long currencyId);
     void updateCurrencyRate();
 }

@@ -40,9 +40,9 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Map<String, Long> getBalance(Long userId, Long currencyId) {
-        Long totalBalance = 0L;
-        HashMap<String, Long> currencyBalance = new HashMap<>();
+    public Map<String, Float> getBalance(Long userId, Long currencyId) {
+        Float totalBalance = 0F;
+        HashMap<String, Float> currencyBalance = new HashMap<>();
         if(operationRepository.findAllOperationsByUserId(userId).isPresent()) {
             List<Operation> operations = operationRepository.findAllOperationsByUserId(userId).get();
             for(Operation operation: operations) {

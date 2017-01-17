@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,23 +52,15 @@ public class UserController {
 
             //all currencies balance
             List<Currency> currencyList = currencyService.getCurrencyList();
-            ArrayList<Map<String, Long>> currencyBalances = new ArrayList<>();
+            ArrayList<Map<String, Float>> currencyBalances = new ArrayList<>();
             for(Currency currency: currencyList) {
                 currencyBalances.add(operationService.getBalance(currentUser.getId(), currency.getCurrencyId()));
             }
-
-
 
             model.put("loggedUserName", loggedUser);
             model.put("currencyBalances", currencyBalances);
             model.put("currencyList", currencyList);
 
-            HashMap<String, Float> ruUsRate = rateService.calculateCurrencyRate(currencyList.get(0), currencyList.get(1));
-            HashMap<String, Float> ruEuRate = rateService.calculateCurrencyRate(currencyList.get(0), currencyList.get(2));
-            HashMap<String, Float> usEuRate = rateService.calculateCurrencyRate(currencyList.get(1), currencyList.get(2));
-            model.put("ruUsRate", ruUsRate);
-            model.put("ruEuRate", ruEuRate);
-            model.put("usEuRate", usEuRate);
         }
         return "user";
     }

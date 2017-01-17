@@ -29,6 +29,16 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
+    public Currency getCurrencyIdByCurrencyShortName(String currencyShortName) {
+        return currencyRepository.findOneByCurrencyShortName(currencyShortName);
+    }
+
+    @Override
+    public Currency getCurrencyById(Long currencyId) {
+        return currencyRepository.findOne(currencyId);
+    }
+
+    @Override
     @Scheduled(fixedRate = 10000)
     public void updateCurrencyRate() {
         List<Currency> currencyList = currencyRepository.findAll();

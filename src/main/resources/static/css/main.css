@@ -5,3 +5,13 @@ h1{
 h2{
     color:#FF0000;
 }
+
+.up {
+    color: green;
+}
+.down {
+    color: red;
+}
+.no-change {
+    color: gray;
+}
