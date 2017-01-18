@@ -107,4 +107,20 @@ public class Operation {
         this.exchangeRate = exchangeRate;
     }
 
+    private String currencyBuyFullName;
+    private String currencySellFullName;
+
+    public String getCurrencyBuyFullName() {
+        return currencyBuyFullName;
+    }
+    public void setCurrencyBuyFullName(String currencyBuyFullName) {
+        this.currencyBuyFullName = currencyBuyFullName;
+    }
+
+    public String getCurrencySellFullName() {
+        return currencySellFullName;
+    }
+    public void setCurrencySellFullName(String currencySellFullName) {
+        this.currencySellFullName = currencySellFullName;
+    }
 }

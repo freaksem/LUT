@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.*;
 
 /**
@@ -44,18 +42,7 @@ public class RateRefreshController {
         }
         JSONObject jsonObject = new JSONObject();
         for(HashMap<String, Float> currencyRate: currRates) {
-            Iterator it = currencyRate.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                jsonObject.put(pair.getKey(), pair.getValue());
-                it.remove(); // avoids a ConcurrentModificationException
-            }
-        }
-        StringWriter currenciesRateJson = new StringWriter();
-        try {
-            jsonObject.writeJSONString(currenciesRateJson);
-        } catch (IOException e) {
-            e.printStackTrace();
+            jsonObject.putAll(currencyRate);
         }
 
         return jsonObject;

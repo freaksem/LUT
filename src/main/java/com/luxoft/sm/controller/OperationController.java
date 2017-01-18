@@ -6,7 +6,6 @@ import com.luxoft.sm.repository.OperationRepository;
 import com.luxoft.sm.services.CurrencyService;
 import com.luxoft.sm.services.CurrentUser;
 import com.luxoft.sm.services.OperationService;
-import com.luxoft.sm.services.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

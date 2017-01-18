@@ -8,9 +8,9 @@ public enum Currencies {
     US("USD", "Доллар", 65F),
     EU("EUR", "Евро", 75F);
 
-    private String shortName;
-    private String fullName;
-    private Float rate;
+    private final String shortName;
+    private final String fullName;
+    private final Float rate;
 
     Currencies(String shortName, String fullName, Float rate) {
         this.shortName = shortName;

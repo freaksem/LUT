@@ -5,7 +5,6 @@ import com.luxoft.sm.domain.Role;
 import com.luxoft.sm.domain.User;
 import com.luxoft.sm.repository.OperationRepository;
 import com.luxoft.sm.repository.UserRepository;
-import com.luxoft.sm.services.OperationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -13,8 +12,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by smukhlaev on 23.12.2016.
@@ -25,7 +22,7 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent>{
     private UserRepository userRepository;
     private OperationRepository operationRepository;
 
-    private Logger logger = Logger.getLogger(UserLoader.class);
+    private final Logger logger = Logger.getLogger(UserLoader.class);
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {

@@ -24,12 +24,6 @@ public class UserController {
         this.currencyService = currencyService;
     }
 
-    private RateService rateService;
-    @Autowired
-    public void setUserService(RateService rateService) {
-        this.rateService = rateService;
-    }
-
     private OperationService operationService;
     @Autowired
     public void setOperationService(OperationService operationService) {
@@ -47,6 +41,14 @@ public class UserController {
             //last 20 operations sorted by date
             if(operationService.findFirst20OperationsByUserId(currentUser.getId()).isPresent()) {
                 List<Operation> userOperations = operationService.findFirst20OperationsByUserId(currentUser.getId()).get();
+                for(Operation operationItem: userOperations) {
+                    Long currencyBuyId = operationItem.getCurrencyBuyId();
+                    Long currencySellId = operationItem.getCurrencySellId();
+                    Currency buyCurrency = currencyService.getCurrencyById(currencyBuyId);
+                    Currency sellCurrency = currencyService.getCurrencyById(currencySellId);
+                    operationItem.setCurrencyBuyFullName(buyCurrency.getCurrencyFullName());
+                    operationItem.setCurrencySellFullName(sellCurrency.getCurrencyFullName());
+                }
                 model.put("userOperations", userOperations);
             }
 
