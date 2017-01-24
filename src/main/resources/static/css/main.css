@@ -1,17 +1,118 @@
-h1{
-    color:#0000FF;
+h3 {
+    margin: 0 0 10px;
+    padding-top: 10px;
+}
+.page {
+    width: 920px;
+    margin: 0 auto;
+}
+.login-form-container {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+.login-form__label {
+    display: block;
+    text-align: center;
+}
+.login-form__input {
+    display: block;
+    margin: 0 auto 5px;
+    padding: 5px;
+}
+.logo__img {
+    height: 70px;
+    display: block;
+    margin: 0 auto;
 }
 
-h2{
-    color:#FF0000;
+.header {
+    text-align: center;
+}
+.logo {
+    display: inline-block;
+    vertical-align: top;
+}
+.logout-form {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.logout-form__text {
+    margin: 0 0 5px;
+    font-size: 14px;
 }
 
-.up {
-    color: green;
+.content {
+    width: 68%;
+    float: left;
+    margin: 0 1%;
 }
-.down {
+.sidebar {
+    float: right;
+    width: 28%;
+    margin: 0 1%;
+}
+
+.operations-form-container {
+    padding: 0 0 11px;
+    border-bottom: 1px dashed gray;
+}
+.operation-form-button {
+    text-align: right;
+    width: 490px;
+}
+.operation-form__button {
+    margin: 15px 0 0;
+    width: 90px;
+    height: 40px;
+    cursor: pointer;
+}
+.operation-form__input {
+    width: 100px;
+    padding: 5px;
+}
+
+.buy-container, .sell-container {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.balance {
+    border: 1px solid;
+    padding: 0 5px;
+}
+.currencies-rate {
+    border: 1px solid;
+    border-top: 0;
+    padding: 0 5px;
+}
+.currencies-rate__rate_red {
     color: red;
 }
-.no-change {
-    color: gray;
+.currencies-rate__rate_green {
+    color: green;
+}
+.operation-form__select {
+    padding: 5px;
+}
+.operations-history {
+    border-collapse: collapse;
+    border: 1px solid;
+}
+.operations-history td, .operations-history th {
+    border-right: 1px solid;
+    border-collapse: collapse;
+    text-align: left;
+}
+.operations-history tr:nth-child(odd) {
+    background: #eaeaea;
+}
+.operations-history__tableheader {
+    background: #bababa;
+}
+.operations-history__tablecell {
+    padding: 5px;
 }

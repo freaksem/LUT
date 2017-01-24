@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <title>Login page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+    </head>
+    <body>
+        <div class="header">
+            <div class="logo">
+                <a href="#"><img class="logo__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/2002_currency_exchange_AIGA_euro_money.png/200px-2002_currency_exchange_AIGA_euro_money.png"/></a>
+            </div>
+        </div>
+        <div class="page">
+            <div class="login-form-container">
+                <form class="login-form login-form_center" th:action="@{/login}" method="post">
+                    <label for="userName" class="login-form__label">Логин</label>
+                    <input type="text" id="userName" name="userName" class="login-form__input" />
+                    <label for="password" class="login-form__label">Пароль</label>
+                    <input type="password" id="password" name="password" class="login-form__input" />
+                    <button class="login-form__button">Вход</button>
+                </form>
+                <div th:if="${param.error}">
+                    Invalid username or password.
+                </div>
+            </div>
+        </div>
+    </body>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/angular.min.js}"></script>
+    <script th:src="@{/js/appjs.js}"></script>
+</html>

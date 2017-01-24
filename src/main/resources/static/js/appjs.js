@@ -1,6 +1,3 @@
-/**
- * Created by Luxoft on 18.01.2017.
- */
 $(function(){
     currencyRefresh();
     setInterval(currencyRefresh, 5000);
@@ -21,13 +18,22 @@ $(function(){
         }
     });
 
-    $('select').change(function() {
-        var value = $(this).val();
-        $(this).siblings('select.exchange-select').children('option').each(function() {
-            if ( $(this).val() === value ) {
-                $(this).attr('disabled', true).siblings().removeAttr('disabled');
-            }
+    var $selects = $('select');
+    $selects.on('change', function() {
+        var $select = $(this),
+            $options = $selects.not($select).find('option'),
+            selectedText = $select.children('option:selected').text();
+        $options.children('option').each(function() {
+           $(this).removeAttr('disabled');
         });
+        var $optionsToDisable = $options.filter(function() {
+            return $(this).text() == selectedText;
+        });
+        var $optionsToEnable = $options.filter(function() {
+            return $(this).text() != selectedText;
+        });
+        $optionsToDisable.prop('disabled', true);
+        $optionsToEnable.prop('disabled', false);
     });
 });
 function currencyRefresh() {
@@ -45,12 +51,12 @@ function currencyRefresh() {
                         if(currencyCost == previousCost) {
                             change = $("#"+currencyId).attr("class");
                         }
-                        else if(currencyCost > previousCost) change = "up";
-                        else change = "down";
+                        else if(currencyCost > previousCost) change = "currencies-rate__rate_green";
+                        else change = "currencies-rate__rate_red";
                     }
 
 
-                    ratesContent += "<p id='" + currencyId + "' class='"+change+"'>" + key + ": " + currencyCost + "</p>";
+                    ratesContent += "<p id='" + currencyId + "' class='currencies-rate__rate "+change+"'>" + key + ": " + currencyCost + "</p>";
                     ratesContent += "<input type='hidden' name='"+key+"' value='" + currencyCost + "' />";
                 }
             }
