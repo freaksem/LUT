@@ -1,5 +1,5 @@
 var app = angular.module('exchangeApp', ['ngRoute']);
-app.config(function($routeProvider){
+app.config(function($routeProvider, $locationProvider){
    $routeProvider
        .when('/user',{
            templateUrl: '/tmpl/user.html',
@@ -10,13 +10,14 @@ app.config(function($routeProvider){
            controller: 'loginController'
        })
        .otherwise(
-           {redirectTo: '/'}
+           {redirectTo: '/login'}
        );
+    $locationProvider.html5Mode(true);
 });
 
 app.controller('userController', function($scope, $http){
     $http.get('/api/user/').then(function(response) {
-        $scope = response.data;
+        $scope.message = response.data;
     })
 });
 
