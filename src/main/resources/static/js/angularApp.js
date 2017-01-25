@@ -2,11 +2,11 @@ var app = angular.module('exchangeApp', ['ngRoute']);
 app.config(function($routeProvider){
    $routeProvider
        .when('/user',{
-           templateUrl: '../../templates/user.html',
+           templateUrl: '/tmpl/user.html',
            controller: 'userController'
        })
        .when('/login', {
-           templateUrl: '../../templates/login.html',
+           templateUrl: '/tmpl/login.html',
            controller: 'loginController'
        })
        .otherwise(
@@ -15,15 +15,14 @@ app.config(function($routeProvider){
 });
 
 app.controller('userController', function($scope, $http){
-    $http.get('/user/').then(function(response) {
-        $scope.message = response.data;
-        console.log($scope.message);
+    $http.get('/api/user/').then(function(response) {
+        $scope = response.data;
     })
 });
 
 app.controller('loginController', function($scope, $http){
     $http.get('/login/').then(function(response) {
         $scope.message = response.data;
-        console.log($scope.message);
+        //console.log($scope.message);
     })
 });

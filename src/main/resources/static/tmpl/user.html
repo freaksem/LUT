@@ -11,7 +11,7 @@
                 <a href="#"><img class="logo__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/2002_currency_exchange_AIGA_euro_money.png/200px-2002_currency_exchange_AIGA_euro_money.png"/></a>
             </div>
             <div class="logout-form">
-                <p class="logout-form__text" th:text="'Привет, ' + ${loggedUserName}"></p>
+                <p class="logout-form__text">{{$scope.loggedUserName}}</p>
                 <form th:action="@{/logout}" method="post">
                     <button class="logout-form__button">Выход</button>
                 </form>
@@ -57,11 +57,11 @@
                         </tr>
                         <th:block th:each="item: ${userOperations}">
                             <tr class="operations-history__tablerow">
-                                <td class="operations-history__tablecell" th:text="${item.currencyBuyFullName}">A Smoke Test'</td>
-                                <td class="operations-history__tablecell" th:text="${item.currencyBuySumm}">A Smoke Test'</td>
-                                <td class="operations-history__tablecell" th:text="${item.currencySellFullName}">A Smoke Test'</td>
-                                <td class="operations-history__tablecell" th:text="${item.currencySellSumm}">A Smoke Test'</td>
-                                <td class="operations-history__tablecell" th:text="${item.exchangeRate}">A Smoke Test'</td>
+                                <td class="operations-history__tablecell" th:text="${item.currencyBuyFullName}"></td>
+                                <td class="operations-history__tablecell" th:text="${item.currencyBuySumm}"></td>
+                                <td class="operations-history__tablecell" th:text="${item.currencySellFullName}"></td>
+                                <td class="operations-history__tablecell" th:text="${item.currencySellSumm}"></td>
+                                <td class="operations-history__tablecell" th:text="${item.exchangeRate}"></td>
                             </tr>
                         </th:block>
                     </table>
@@ -82,10 +82,5 @@
                 </div>
             </div>
         </div>
-        <script th:src="@{/js/jquery.js}"></script>
-        <script th:src="@{/js/angular.min.js}"></script>
-        <script th:src="@{/js/angular-route.min.js}"></script>
-        <script th:src="@{/js/exchangeJs.js}"></script>
-        <script th:src="@{/js/angularApp.js}"></script>
     </body>
 </html>
