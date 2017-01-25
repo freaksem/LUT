@@ -12,7 +12,7 @@
 
 	<spring:url value="/css/main.css" var="springCss" />
 	<spring:url value="/js/jquery.js" var="jQuery" />
-	<spring:url value="/js/appjs.js" var="appJs" />
+	<spring:url value="/js/exchangeJs.js" var="appJs" />
 	<link href="${springCss}" rel="stylesheet" />
 
 </head>

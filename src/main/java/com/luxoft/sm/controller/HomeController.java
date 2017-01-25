@@ -13,16 +13,14 @@ import java.util.Map;
 @Controller
 public class HomeController {
     @RequestMapping("/")
-    public String welcome(Map<String, Object> model, Authentication authentication) {
+    public String welcome(Authentication authentication) {
         if(authentication != null) {
-            CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
-
-            String loggedUser = currentUser.getUsername();
-            model.put("loggedUserName", loggedUser);
+            return "redirect:user";
         }
-        else model.put("loggedUserName", null);
+        else {
+            return "redirect:login";
+        }
 
-        return "home";
     }
 
 }

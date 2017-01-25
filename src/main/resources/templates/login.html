@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" ng-app="exchangeApp">
     <head lang="en">
         <title>Login page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
     </head>
-    <body>
+    <body ng-controller="loginController">
         <div class="header">
             <div class="logo">
                 <a href="#"><img class="logo__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/2002_currency_exchange_AIGA_euro_money.png/200px-2002_currency_exchange_AIGA_euro_money.png"/></a>
@@ -28,5 +28,5 @@
     </body>
     <script th:src="@{/js/jquery.js}"></script>
     <script th:src="@{/js/angular.min.js}"></script>
-    <script th:src="@{/js/appjs.js}"></script>
+    <script th:src="@{/js/exchangeJs.js}"></script>
 </html>

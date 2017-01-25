@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +32,8 @@ public class UserController {
     }
 
     @RequestMapping("/user")
-    public String userController(Map<String, Object> model, Authentication authentication) {
-
+    public Map<String, Object> userController(Authentication authentication) {
+        Map<String, Object> model = new HashMap<>();
         CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
 
         if(currentUser != null) {
@@ -64,7 +65,7 @@ public class UserController {
             model.put("currencyList", currencyList);
 
         }
-        return "user";
+        return model;
     }
 
 }
