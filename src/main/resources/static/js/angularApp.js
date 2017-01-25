@@ -20,3 +20,10 @@ app.controller('userController', function($scope, $http){
         console.log($scope.message);
     })
 });
+
+app.controller('loginController', function($scope, $http){
+    $http.get('/login/').then(function(response) {
+        $scope.message = response.data;
+        console.log($scope.message);
+    })
+});

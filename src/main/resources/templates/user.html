@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" ng-app="exchangeApp">
     <head lang="en">
         <title>User page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
     </head>
     <body>
-        <div class="header">
+        <div class="header" ng-controller="userController">
             <div class="logo">
                 <a href="#"><img class="logo__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/2002_currency_exchange_AIGA_euro_money.png/200px-2002_currency_exchange_AIGA_euro_money.png"/></a>
             </div>
