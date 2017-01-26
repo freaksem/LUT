@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="page">
-            <div class="login-form-container">
+            <div class="login-form-container" ng-if="!userLogged">
                 <form class="login-form login-form_center" th:action="@{/login}" method="post">
                     <label for="userName" class="login-form__label">Логин</label>
                     <input type="text" id="userName" name="userName" class="login-form__input" />
@@ -24,6 +24,7 @@
                     Invalid username or password.
                 </div>
             </div>
+            <div ng-if="userLogged"><p>Hello, {{userLogged}}</p></div>
         </div>
     </body>
 </html>

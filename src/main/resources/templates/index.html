@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <!--<base href="/" />-->
+    <base href="/" />
     <title>Home page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
 </head>
-<body data-ng-app="exchangeApp">
-    <h1>Exchange app</h1>
-    <a ng-href="/">home</a>
-    <a ng-href="/#login">Login</a>
-    <a ng-href="/#user">User</a>
+<body ng-app="exchangeApp">
+    <a ng-href="/login">Login</a>
+    <a ng-href="/">User</a>
     <div ng-view="">Hello angular</div>
 </body>
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/angular.min.js"></script>
 <script type="text/javascript" src="/js/angular-route.min.js"></script>
-<script type="text/javascript" src="/js/exchangeJs.js"></script>
 <script type="text/javascript" src="/js/angularApp.js"></script>
 </html>

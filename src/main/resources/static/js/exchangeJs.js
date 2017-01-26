@@ -71,7 +71,7 @@ $("#submit-operation").click(function(event) {
         currencyToBuyParam : $("#buy-select").val(),
         currencyToSellParam : $("#sell-select").val(),
         summToBuyParam : $("#amount-to-buy").val(),
-        _csrf : $("input[name=_csrf]").val()
+        _csrf : getCookie("XSRF-TOKEN")
     }, function(data) {
     }).done(function() {
         location.reload();
@@ -80,3 +80,23 @@ $("#submit-operation").click(function(event) {
     }).complete(function() {
     });
 });
+
+function getCookie(name) {
+    var cookie = " " + document.cookie;
+    var search = " " + name + "=";
+    var setStr = null;
+    var offset = 0;
+    var end = 0;
+    if (cookie.length > 0) {
+        offset = cookie.indexOf(search);
+        if (offset != -1) {
+            offset += search.length;
+            end = cookie.indexOf(";", offset)
+            if (end == -1) {
+                end = cookie.length;
+            }
+            setStr = unescape(cookie.substring(offset, end));
+        }
+    }
+    return(setStr);
+}

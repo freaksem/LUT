@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -30,15 +31,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/css/**","/webjars/**", "/js/**").permitAll()
-            .anyRequest().authenticated();
+            .antMatchers("/css/**","/webjars/**", "/js/**", "/").permitAll().anyRequest()
+                .authenticated().and()
+            .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
         http
             .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error")
                 .usernameParameter("userName")
-                .defaultSuccessUrl("/user", true)
+                .defaultSuccessUrl("/", true)
                 .permitAll()
             .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login")

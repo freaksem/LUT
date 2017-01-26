@@ -1,87 +1,73 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head lang="en">
-        <title>User page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
-    </head>
-    <body>
-        <div class="header">
-            <div class="logo">
-                <a href="#"><img class="logo__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/2002_currency_exchange_AIGA_euro_money.png/200px-2002_currency_exchange_AIGA_euro_money.png"/></a>
-            </div>
-            <div class="logout-form">
-                <p class="logout-form__text"></p>
-                <form action="/logout" method="post">
-                    <input type="hidden" name="_csrf" value="" />
-                    <button class="logout-form__button">Выход</button>
-                </form>
+<div class="header">
+    <div class="logo">
+        <a href="#"><img class="logo__img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/2002_currency_exchange_AIGA_euro_money.png/200px-2002_currency_exchange_AIGA_euro_money.png"/></a>
+    </div>
+    <div class="logout-form">
+        <p class="logout-form__text">Hello, {{message.loggedUserName}} <a href="" ng-click="logout()">Logout</a></p>
+    </div>
+</div>
+<div class="page">
+    <div class="content">
+        <div class="operations-form-container">
+            <h3>Покупка валюты</h3>
+            <form class="operation-form" action="/operation" method="post">
+                <div class="buy-container">
+                    <label for="buy-select" class="operation-form__label">Покупаем</label>
+                    <select id="buy-select" class="operation-form__select" name="buy-select">
+                        <option value="0" class="operation-form__option">Выбрать</option>
+                        <option class="operation-form__option" ng-repeat="currency in message.currencyList" value="{{currency.currencyShortName}}">{{currency.currencyShortName}}</option>
+                    </select>
+                    <label for="amount-to-buy" class="operation-form__label">сумма</label>
+                    <input id="amount-to-buy" class="operation-form__input" type="number" min="1" name="buy-summ"/>
+                </div>
+                <div class="sell-container">
+                    <label for="sell-select" class="operation-form__label">Продаём</label>
+                    <select class="operation-form__select exchange-select" id="sell-select" name="sell-select">
+                        <option value="0" class="operation-form__option">Выбрать</option>
+                        <option class="operation-form__option" ng-repeat="currency in message.currencyList" value="{{currency.currencyShortName}}">{{currency.currencyShortName}}</option>
+                    </select>
+                </div>
+                <div class="operation-form__result">Cтоимость: <span id="exchangeCost">0</span></div>
+                <input type="hidden" value="" id="exchangeCurrencies" />
+                <div class="operation-form-button">
+                    <button id="submit-operation" class="operation-form__button">Купить</button>
+                </div>
+                <input type="hidden" name="_csrf" value="">
+            </form>
+        </div>
+        <div class="operations-history-container">
+            <h3>История операций</h3>
+            <table class="operations-history" border="0" cellspacing="0" width="100%">
+                <tr class="operations-history__tablerow">
+                    <th class="operations-history__tableheader">Покупка</th>
+                    <th class="operations-history__tableheader">Сумма</th>
+                    <th class="operations-history__tableheader">Продажа</th>
+                    <th class="operations-history__tableheader">Сумма</th>
+                    <th class="operations-history__tableheader">Курс</th>
+                </tr>
+                <tr class="operation-form__option" ng-repeat="operation in message.userOperations">
+                    <td class="operations-history__tablecell">{{operation.currencyBuyFullName}}</td>
+                    <td class="operations-history__tablecell">{{operation.currencyBuySumm}}</td>
+                    <td class="operations-history__tablecell">{{operation.currencySellFullName}}</td>
+                    <td class="operations-history__tablecell">{{operation.currencySellSumm}}</td>
+                    <td class="operations-history__tablecell">{{operation.exchangeRate}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="balance">
+            <h3>Баланс</h3>
+            <div class="operation-form__option" ng-repeat="balance in message.currencyBalances">
+                <p class="balance__balance-total" ng-repeat="(key, value) in balance">
+                    <span>{{key}}: {{value}}</span>
+                </p>
             </div>
         </div>
-        <div class="page">
-            <div class="content">
-                <div class="operations-form-container">
-                    <h3>Покупка валюты</h3>
-                    <form class="operation-form" th:action="@{/operation}" method="post">
-                        <div class="buy-container">
-                            <label for="buy-select" class="operation-form__label">Покупаем</label>
-                            <select id="buy-select" class="operation-form__select" name="buy-select" th:field="*{currencyList}">
-                                <option value="0" class="operation-form__option">Выбрать</option>
-                                <option class="operation-form__option" th:each="currency: ${currencyList}" th:value="${currency.currencyShortName}" th:text="${currency.currencyShortName}"></option>
-                            </select>
-                            <label for="amount-to-buy" class="operation-form__label">сумма</label>
-                            <input id="amount-to-buy" class="operation-form__input" type="number" min="1" name="buy-summ"/>
-                        </div>
-                        <div class="sell-container">
-                            <label for="sell-select" class="operation-form__label">Продаём</label>
-                            <select class="operation-form__select exchange-select" id="sell-select" name="sell-select" th:field="*{currencyList}">
-                                <option value="0" class="operation-form__option">Выбрать</option>
-                                <option class="operation-form__option" th:each="currency: ${currencyList}" th:value="${currency.currencyShortName}" th:text="${currency.currencyShortName}"></option>
-                            </select>
-                        </div>
-                        <div class="operation-form__result">Cтоимость: <span id="exchangeCost">0</span></div>
-                        <input type="hidden" value="" id="exchangeCurrencies" />
-                        <div class="operation-form-button">
-                            <button id="submit-operation" class="operation-form__button">Купить</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="operations-history-container">
-                    <h3>История операций</h3>
-                    <table class="operations-history" border="0" cellspacing="0" width="100%">
-                        <tr class="operations-history__tablerow">
-                            <th class="operations-history__tableheader">Покупка</th>
-                            <th class="operations-history__tableheader">Сумма</th>
-                            <th class="operations-history__tableheader">Продажа</th>
-                            <th class="operations-history__tableheader">Сумма</th>
-                            <th class="operations-history__tableheader">Курс</th>
-                        </tr>
-                        <th:block th:each="item: ${userOperations}">
-                            <tr class="operations-history__tablerow">
-                                <td class="operations-history__tablecell" th:text="${item.currencyBuyFullName}"></td>
-                                <td class="operations-history__tablecell" th:text="${item.currencyBuySumm}"></td>
-                                <td class="operations-history__tablecell" th:text="${item.currencySellFullName}"></td>
-                                <td class="operations-history__tablecell" th:text="${item.currencySellSumm}"></td>
-                                <td class="operations-history__tablecell" th:text="${item.exchangeRate}"></td>
-                            </tr>
-                        </th:block>
-                    </table>
-                </div>
-            </div>
-            <div class="sidebar">
-                <div class="balance">
-                    <h3>Баланс</h3>
-                    <div th:each="currencyBalanceMap: ${currencyBalances}">
-                        <p class="balance__balance-total" th:each="currencyBalance: ${currencyBalanceMap}">
-                            <span th:text="${currencyBalance.key} + ': '"></span><span th:text="${currencyBalance.value}"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="rate-wrapper currencies-rate">
-                    <h3>Курс валют</h3>
-                    <div id="currRates"></div>
-                </div>
-            </div>
+        <div class="rate-wrapper currencies-rate">
+            <h3>Курс валют</h3>
+            <div id="currRates"></div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+<script type="text/javascript" src="/js/exchangeJs.js"></script>
