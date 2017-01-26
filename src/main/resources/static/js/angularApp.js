@@ -10,7 +10,7 @@ app.config(function($routeProvider, $locationProvider){
            controller: 'loginController'
        })
        .otherwise(
-           {redirectTo: '/login'}
+           {redirectTo: '/'}
        );
     $locationProvider.html5Mode(true);
 });
@@ -21,9 +21,9 @@ app.controller('userController', function($scope, $http){
     })
 });
 
-app.controller('loginController', function($scope, $http){
+app.controller('loginController', function($scope, $http, $location){
     $http.get('/login/').then(function(response) {
         $scope.message = response.data;
-        //console.log($scope.message);
+        $location.path("/user");
     })
 });

@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/css/**","/webjars/**", "/js/**", "/").permitAll()
+            .antMatchers("/css/**","/webjars/**", "/js/**").permitAll()
             .anyRequest().authenticated();
 
         http
@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .failureUrl("/login?error")
                 .usernameParameter("userName")
-                .defaultSuccessUrl("/user")
+                .defaultSuccessUrl("/user", true)
                 .permitAll()
             .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login")

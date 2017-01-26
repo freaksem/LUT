@@ -20,7 +20,7 @@ import java.util.Map;
  * Created by sm on 10.01.2017.
  */
 @RestController
-public class UserController2 {
+public class RestUserController {
 
     private CurrencyService currencyService;
     @Autowired
