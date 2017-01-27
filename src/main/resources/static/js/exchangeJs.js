@@ -1,20 +1,24 @@
 $(function(){
     currencyRefresh();
     setInterval(currencyRefresh, 5000);
-
     $("#amount-to-buy").bind('keyup mouseup', function () {
         var currencyToBuy = $("#buy-select").val();
         var currencyToSell = $("#sell-select").val();
         var exchangeSumm = $("#exchangeCost");
-        if(currencyToBuy == 0) {
-            exchangeSumm.html("").append("Валюта покупки не выбрана");
+        var errorMessage = '';
+        if(currencyToBuy == 0 || currencyToBuy == '? undefined:undefined ?') {
+            errorMessage += "<p>Валюта покупки не выбрана</p>";
         }
-        if(currencyToSell == 0) {
-            exchangeSumm.html("").append("Валюта продажи не выбрана");
+        if(currencyToSell == 0 || currencyToSell == '? undefined:undefined ?') {
+            errorMessage += "<p>Валюта продажи не выбрана</p>";
         }
+
         if(currencyToBuy != 0 && currencyToSell !=0) {
             var exchangeRate = $("input[name='"+currencyToSell+"/"+currencyToBuy+"']").val();
             exchangeSumm.html(exchangeRate * $(this).val());
+        }
+        if(errorMessage) {
+            $("#exchangeCost").html(errorMessage);
         }
     });
 
