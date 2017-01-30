@@ -5,7 +5,7 @@ app.factory('CurrencyRate', function($resource) {
 });
 
 app.factory('Operation', function($resource) {
-    return $resource('operation');
+    return $resource('/api/operation');
 });
 
 app.config(function($routeProvider, $locationProvider, $httpProvider){
@@ -50,14 +50,29 @@ app.controller('userController', function($scope, $http, $window, CurrencyRate, 
     $scope.reload();
 
     $scope.operationSubmit=function(){
-        var buyCurrency = angular.toJson($scope.operation.buy.$modelValue);
-        var amountToBuy = angular.toJson($scope.operation.summ.$modelValue);
-        var sellCurrency = angular.toJson($scope.operation.sell.$modelValue);
-        //var token = angular.toJson($scope.operation..$modelValue);
-        console.log(buyCurrency);
-        console.log(amountToBuy);
-        console.log(sellCurrency);
-        //Operation.save()
+        var currencyToBuy = $scope.operation.buy.$modelValue;
+        var currencyToSell = $scope.operation.sell.$modelValue;
+        var summToBuy = ($scope.operation.summ.$modelValue).toString();
+
+        var operationData = {
+            currencyToBuyParam: currencyToBuy,
+            currencyToSellParam: currencyToSell,
+            summToBuyParam: summToBuy,
+            _csrf : getCookie("XSRF-TOKEN")
+        };
+        $scope.operation.$setPristine(true);
+        $scope.operation.$setUntouched(true);
+        Operation.save(operationData, function(response) {
+            console.log(response.userOperations);
+            if(response.userOperations != undefined) {
+                $scope.message.userOperations = response.userOperations;
+                $scope.message.currencyBalances = response.currencyBalances;
+                $scope.operation.showError = false;
+            }
+            else {
+                $scope.operation.showError = true;
+            }
+        });
     }
 });
 
