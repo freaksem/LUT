@@ -10,7 +10,7 @@
     <div class="content">
         <div class="operations-form-container">
             <h3>Покупка валюты</h3>
-            <form class="operation-form" action="/operation" method="post" name="operation" novalidate>
+            <form class="operation-form" method="post" name="operation" novalidate ng-submit="operationSubmit()">
                 <div class="buy-container">
                     <label for="buy-select" class="operation-form__label">Покупаем</label>
                     <select id="buy-select" class="operation-form__select" name="buy" ng-model="buy" required>
@@ -32,7 +32,7 @@
                 </div>
                 <input type="hidden" value="" id="exchangeCurrencies" />
                 <div class="operation-form-button">
-                    <button ng-disabled="operation.$invalid" id="submit-operation" class="operation-form__button" ng-disabled="operation.$invalid">Купить</button>
+                    <button ng-disabled="operation.$invalid" id="submit-operation" class="operation-form__button">Купить</button>
                 </div>
                 <input type="hidden" name="_csrf" value="">
             </form>
@@ -69,6 +69,12 @@
         <div class="rate-wrapper currencies-rate">
             <h3>Курс валют</h3>
             <div id="currRates"></div>
+            <div>----</div>
+            <div class="test">
+                <p ng-repeat="(key, value) in currenciesRates">
+                    <span id="{{key}}" class="currencies-rate__rate">{{key}}: </span><span>{{ value }}</span>
+                </p>
+            </div>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 $(function(){
-    currencyRefresh();
-    setInterval(currencyRefresh, 5000);
+    //currencyRefresh();
+    //setInterval(currencyRefresh, 5000);
     $("#amount-to-buy").bind('keyup mouseup', function () {
         var currencyToBuy = $("#buy-select").val();
         var currencyToSell = $("#sell-select").val();
@@ -13,11 +13,12 @@ $(function(){
             errorMessage += "<p>Валюта продажи не выбрана</p>";
         }
 
-        if(currencyToBuy != 0 && currencyToSell !=0) {
-            var exchangeRate = $("input[name='"+currencyToSell+"/"+currencyToBuy+"']").val();
+        if(!errorMessage) {
+            var exchangeRate = $("#"+currencyToSell+"\\/"+currencyToBuy).next('span').text();
+            console.log(exchangeRate);
             exchangeSumm.html(exchangeRate * $(this).val());
         }
-        if(errorMessage) {
+        else {
             $("#exchangeCost").html(errorMessage);
         }
     });
@@ -69,7 +70,7 @@ function currencyRefresh() {
     });
 }
 
-$("#submit-operation").click(function(event) {
+/*$("#submit-operation").click(function(event) {
     event.preventDefault();
     $.post("operation", {
         currencyToBuyParam : $("#buy-select").val(),
@@ -83,7 +84,7 @@ $("#submit-operation").click(function(event) {
         $("#submit-operation").after("Недостаточно средств!");
     }).complete(function() {
     });
-});
+});*/
 
 function getCookie(name) {
     var cookie = " " + document.cookie;

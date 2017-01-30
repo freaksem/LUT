@@ -116,3 +116,6 @@ h3 {
 .operations-history__tablecell {
     padding: 5px;
 }
+.rate-wrapper {
+    min-height: 281px;
+}
