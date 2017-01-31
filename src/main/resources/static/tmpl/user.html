@@ -16,7 +16,7 @@
                     <select id="buy-select" class="operation-form__select" name="buy" ng-model="buy" required>
                         <option class="operation-form__option" ng-repeat="currency in message.currencyList" value="{{currency.currencyShortName}}">{{currency.currencyShortName}}</option>
                     </select>
-                    <label for="amount-to-buy" class="operation-form__label">сумма</label>
+                    <label for="amount-to-buy" class="operation-form__label">Сумма</label>
                     <input id="amount-to-buy" class="operation-form__input" required type="number" min="1" name="summ" ng-model="summ" />
                     <p ng-show="operation.summ.$error.min">Сумма покупки должна быть больше 0!</p>
                 </div>

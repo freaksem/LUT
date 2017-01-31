@@ -63,7 +63,6 @@ app.controller('userController', function($scope, $http, $window, CurrencyRate, 
         $scope.operation.$setPristine(true);
         $scope.operation.$setUntouched(true);
         Operation.save(operationData, function(response) {
-            console.log(response.userOperations);
             if(response.userOperations != undefined) {
                 $scope.message.userOperations = response.userOperations;
                 $scope.message.currencyBalances = response.currencyBalances;
