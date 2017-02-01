@@ -72,6 +72,32 @@ app.controller('userController', function($scope, $http, $window, CurrencyRate, 
                 $scope.operation.showError = true;
             }
         });
+    };
+
+    $scope.calculateCost = function(){
+        $scope.exchangeCurrencyError = '';
+        var currenciesToExchange = $scope.sell+"/"+$scope.buy;
+        angular.forEach($scope.currenciesRates, function(value, key){
+            if(currenciesToExchange == key) {
+                $scope.exchangeCost = $scope.summ * value;
+            }
+            else {
+                if($scope.sell == 0 || $scope.sell == undefined ) {
+                    $scope.exchangeCost = "";
+                    $scope.exchangeCost += "Валюта продажи не выбрана! ";
+                    $scope.operation.$invalid = true;
+                }
+                if($scope.buy == 0 || $scope.buy == undefined) {
+                    $scope.exchangeCost += "Валюта покупки не выбрана!";
+                    $scope.operation.$invalid = true;
+                }
+                if($scope.sell == $scope.buy) {
+                    $scope.exchangeCost = "";
+                    $scope.exchangeCurrencyError = "Выберите валюты для обмена корректно!";
+                    $scope.operation.$invalid = true;
+                }
+            }
+        });
     }
 });
 
@@ -81,3 +107,23 @@ app.controller('loginController', function($scope, $http){
         $scope.userLogged = userControllerScope.loggedUserName;
     })
 });
+
+function getCookie(name) {
+    var cookie = " " + document.cookie;
+    var search = " " + name + "=";
+    var setStr = null;
+    var offset = 0;
+    var end = 0;
+    if (cookie.length > 0) {
+        offset = cookie.indexOf(search);
+        if (offset != -1) {
+            offset += search.length;
+            end = cookie.indexOf(";", offset)
+            if (end == -1) {
+                end = cookie.length;
+            }
+            setStr = unescape(cookie.substring(offset, end));
+        }
+    }
+    return(setStr);
+}

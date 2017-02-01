@@ -13,20 +13,22 @@
             <form class="operation-form" method="post" name="operation" novalidate ng-submit="operationSubmit()">
                 <div class="buy-container">
                     <label for="buy-select" class="operation-form__label">Покупаем</label>
-                    <select id="buy-select" class="operation-form__select" name="buy" ng-model="buy" required>
+                    <select ng-change="calculateCost()" id="buy-select" class="operation-form__select" name="buy" ng-model="buy" required>
                         <option class="operation-form__option" ng-repeat="currency in message.currencyList" value="{{currency.currencyShortName}}">{{currency.currencyShortName}}</option>
                     </select>
                     <label for="amount-to-buy" class="operation-form__label">Сумма</label>
-                    <input id="amount-to-buy" class="operation-form__input" required type="number" min="1" name="summ" ng-model="summ" />
+                    <input id="amount-to-buy" class="operation-form__input" required type="number" min="1" name="summ" ng-model="summ" ng-change="calculateCost()" ng-init="summ=1"/>
                     <p ng-show="operation.summ.$error.min">Сумма покупки должна быть больше 0!</p>
                 </div>
                 <div class="sell-container">
                     <label for="sell-select" class="operation-form__label">Продаём</label>
-                    <select class="operation-form__select exchange-select" id="sell-select" name="sell" required ng-model="sell">
+                    <select ng-change="calculateCost()" class="operation-form__select exchange-select" id="sell-select" name="sell" required ng-model="sell">
                         <option class="operation-form__option" ng-repeat="currency in message.currencyList" value="{{currency.currencyShortName}}">{{currency.currencyShortName}}</option>
                     </select>
                 </div>
-                <div class="operation-form__result">Cтоимость: <span id="exchangeCost">0</span>
+                <div class="operation-form__result">
+                    Cтоимость: <span id="exchangeCost">{{exchangeCost}}</span>
+                    <p>{{exchangeCurrencyError}}</p>
                     <p ng-show="operation.buy.$modelValue == 0">Валюта покупки не выбрана!</p>
                     <p ng-show="operation.sell.$modelValue == 0">Валюта продажи не выбрана!</p>
                 </div>
@@ -69,14 +71,10 @@
         </div>
         <div class="rate-wrapper currencies-rate">
             <h3>Курс валют</h3>
-            <div id="currRates"></div>
-            <div>----</div>
-            <div class="test">
-                <p ng-repeat="(key, value) in currenciesRates">
-                    <span id="{{key}}" class="currencies-rate__rate">{{key}}: </span><span>{{ value }}</span>
-                </p>
-            </div>
+            <p ng-repeat="(key, value) in currenciesRates">
+                <span id="{{key}}" class="currencies-rate__rate">{{key}}: </span><span>{{ value }}</span>
+                <input type="hidden" name="{{key}}" value="{{value}}" />
+            </p>
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/js/exchangeJs.js"></script>
